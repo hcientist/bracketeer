@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bracketeer</title>
+  <link rel="icon" href="https://fav.farm/🏟️">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      justify-content: stretch;
+      align-items: stretch;
+    }
+
+    #controls {
+      flex-grow: 0;
+      min-height: 4rem;
+    }
+
+    main {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      flex-grow: 1;
+    }
+
+    .col {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .direction-col {
+      flex-direction: column;
+    }
+
+    #sizes {
+      /* https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range#adding_labels */
+    }
+  </style>
+</head>
+
+<body>
+  <div id="controls">
+    <label for="horizontal">horizontal</label><input type="radio" name="direction" id="h" value="h" checked>
+    <input type="radio" name="direction" id="v" value="v"><label for="vertical">vertical</label>
+    <input type="range" id="num" name="num" min="0" max="4" value="2"><output name="num-competitors" for="num">16</output>
+    <label for="num"># competitors</label>
+    <!-- <datalist id="sizes">
+      <option value="4" label="4"></option>
+      <option value="8" label="8"></option>
+      <option value="16" label="16"></option>
+      <option value="32" label="32"></option>
+      <option value="64" label="64"></option>
+    </datalist> -->
+
+    <!-- <textarea name="competitors" id="competitors" cols="30" rows="4"></textarea> -->
+    <button type="button" id="save">Save</button>
+  </div>
+  <main>
+    <div class="col direction-col"><input type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input
+        type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input
+        type="text"><input type="text"><input type="text"><input type="text"><input type="text"></div>
+    <div class="col direction-col"><input type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input
+        type="text"><input type="text"><input type="text"></div>
+    <div class="col direction-col"><input type="text"><input type="text"><input type="text"><input type="text"></div>
+    <div class="col direction-col"><input type="text"><input type="text"></div>
+    <div class="col direction-col"><input type="text"></div>
+    <div class="col direction-col"><input type="text"></div>
+    <div class="col direction-col"><input type="text"><input type="text"></div>
+    <div class="col direction-col"><input type="text"><input type="text"><input type="text"><input type="text"></div>
+    <div class="col direction-col"><input type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input
+        type="text"><input type="text"><input type="text"></div>
+    <div class="col direction-col"><input type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input
+        type="text"><input type="text"><input type="text"><input type="text"><input type="text"><input
+        type="text"><input type="text"><input type="text"><input type="text"><input type="text"></div>
+  </main>
+  <script>
+    const preparePage = () => {
+      // if the radio buttons for direction (eg vertical vs horizontal) are changed, tell the page about it
+      const toggleDirection = () => document.querySelectorAll('main,.col').forEach(elem => elem.classList.toggle('direction-col'))
+      const radios = document.querySelectorAll('input[name="direction"]')
+      radios.forEach(r => r.addEventListener('change', toggleDirection))
+
+      // props to https://stackoverflow.com/a/31712438/1449799
+      const sizes = [4,8,16,32,64]
+
+      // show the number of teams in the output elem
+      const outputElem = document.querySelector('output') //note: if more <output> elems are added, ... this isn't as precise as it should be
+      const rangeElem = document.getElementById('num')
+      const numCompetitorsChanged = (num) => {
+        console.log(outputElem.value)
+        console.log(num)
+        outputElem.value=sizes[num]
+      }
+      rangeElem.addEventListener('input', ev => numCompetitorsChanged(ev.target.value))
+    }
+    preparePage()
+
+  </script>
+</body>
+
+</html>
